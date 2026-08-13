@@ -1,5 +1,5 @@
 from typing import List
-from .models import CleanedRecord
+from src.transform.models import CleanedRecord
 
 
 def validate_record(record: CleanedRecord) -> tuple[bool, str | None]:

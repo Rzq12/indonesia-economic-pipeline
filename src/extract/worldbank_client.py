@@ -1,7 +1,7 @@
 import requests
 from typing import List
 
-from .models import RawEconomicRecord
+from src.extract.models import RawEconomicRecord
 
 WB_BASE_URL = "https://api.worldbank.org/v2"
 
@@ -37,7 +37,7 @@ class WorldBankClient:
                 indicator_name=indicator_name,
                 country_code=item.get("countryiso3code", country_code),
                 country_name=country_name,
-                year=int(item["year"]),
+                year=int(item["date"]),
                 value=float(item["value"]),
                 unit="%",
                 source_url=f"{WB_BASE_URL}/country/{country_code}/indicator/{indicator_code}",

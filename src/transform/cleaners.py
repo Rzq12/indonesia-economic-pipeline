@@ -1,5 +1,5 @@
 from src.extract.models import RawEconomicRecord
-from .models import CleanedRecord
+from src.transform.models import CleanedRecord
 
 CATEGORY_MAP = {
     "NY.GDP.MKTP.KD.ZG": "gdp",

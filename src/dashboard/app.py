@@ -1,6 +1,6 @@
 import streamlit as st
-from .queries import get_inflation_trend, get_gdp_trend, get_summary_stats
-from .charts import build_line_chart, build_bar_chart
+from src.dashboard.queries import get_inflation_trend, get_gdp_trend, get_summary_stats
+from src.dashboard.charts import build_line_chart, build_bar_chart
 
 st.set_page_config(
     page_title="Indonesia Economic Dashboard",

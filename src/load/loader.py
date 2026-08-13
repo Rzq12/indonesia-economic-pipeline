@@ -1,7 +1,7 @@
 from typing import List
 from sqlalchemy.dialects.postgresql import insert
-from .database import get_session
-from .models import DimYear, DimCountry, DimIndicator, FactEconomic
+from src.load.database import get_session
+from src.load.models import DimYear, DimCountry, DimIndicator, FactEconomic
 from src.transform.models import CleanedRecord
 
 

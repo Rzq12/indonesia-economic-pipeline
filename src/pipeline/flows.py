@@ -1,5 +1,5 @@
 from prefect import flow
-from .tasks import extract_indicator, transform_records, load_to_warehouse
+from src.pipeline.tasks import extract_indicator, transform_records, load_to_warehouse
 
 INDICATORS = {
     "gdp": "NY.GDP.MKTP.KD.ZG",
