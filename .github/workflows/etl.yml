@@ -17,8 +17,10 @@ jobs:
       - name: Init schema
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PYTHONPATH: .
         run: python scripts/init_db.py
       - name: Run ETL
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PYTHONPATH: .
         run: python -m src.pipeline.flows
