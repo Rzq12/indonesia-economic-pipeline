@@ -1,10 +1,18 @@
 import os
+import sys
+from pathlib import Path
+
+# Make `src` importable regardless of launch method (Docker, Streamlit Cloud, local)
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import streamlit as st
 
-# Load secrets into env before any DB access (Streamlit Cloud)
-if "DATABASE_URL" in st.secrets:
-    os.environ["DATABASE_URL"] = st.secrets["DATABASE_URL"]
+# Load secrets into env before any DB access (Streamlit Cloud); fall back to env var
+try:
+    if "DATABASE_URL" in st.secrets:
+        os.environ["DATABASE_URL"] = st.secrets["DATABASE_URL"]
+except Exception:
+    pass  # no secrets file configured — use os.environ (Docker/local)
 
 from src.dashboard.queries import (
     get_inflation_trend, get_gdp_trend, get_unemployment_trend,
