@@ -36,6 +36,8 @@ services:
     build: .
     ports:
       - "8501:8501"
+    volumes:
+      - ./src:/app/src
     environment:
       PYTHONPATH: /app
       DB_HOST: postgres
