@@ -32,7 +32,7 @@ def build_line_chart(data: List[dict], title: str, y_label: str) -> go.Figure:
     df = pd.DataFrame(data)
     fig = px.line(df, x="year", y="value",
                   title=title,
-                  labels={"value": y_label, "year": "Year"},
+                  labels={"value": y_label, "year": "Tahun"},
                   markers=True)
     fig.update_traces(line_color=COLORS["primary"], marker=dict(size=6))
     return _base_layout(fig, title, y_label)
@@ -42,65 +42,25 @@ def build_bar_chart(data: List[dict], title: str, y_label: str) -> go.Figure:
     df = pd.DataFrame(data)
     fig = px.bar(df, x="year", y="value",
                  title=title,
-                 labels={"value": y_label, "year": "Year"})
+                 labels={"value": y_label, "year": "Tahun"})
     fig.update_traces(marker_color=COLORS["secondary"])
     return _base_layout(fig, title, y_label)
-
-
-def build_area_chart(data: List[dict], title: str, y_label: str) -> go.Figure:
-    df = pd.DataFrame(data)
-    fig = px.area(df, x="year", y="value",
-                  title=title,
-                  labels={"value": y_label, "year": "Year"},
-                  color_discrete_sequence=[COLORS["secondary"]])
-    fig.update_traces(fill="tozeroy", opacity=0.3)
-    return _base_layout(fig, title, y_label)
-
-
-def build_multi_line_chart(data_dict: dict[str, List[dict]], title: str) -> go.Figure:
-    fig = go.Figure()
-    for name, data in data_dict.items():
-        df = pd.DataFrame(data)
-        fig.add_trace(go.Scatter(
-            x=df["year"],
-            y=df["value"],
-            mode="lines+markers",
-            name=name,
-            line=dict(width=2),
-            marker=dict(size=5),
-        ))
-    return _base_layout(fig, title, "Value")
 
 
 def build_yoy_chart(data: List[dict], title: str) -> go.Figure:
     df = pd.DataFrame(data)
     fig = go.Figure()
-    colors = ["#2ca02c" if (v is not None and v >= 0) else "#d62728" if v is not None else "#999999" for v in df["yoy_pct"]]
+    colors = ["#2ca02c" if (v is not None and v >= 0) else "#d62728" if v is not None else "#999999" for v in df["change"]]
     fig.add_trace(go.Bar(
         x=df["year"],
-        y=df["yoy_pct"],
-        name="YoY Change (%)",
+        y=df["change"],
+        name="Perubahan (poin persentase)",
         marker_color=colors,
-    ))
-    fig.add_hline(y=0, line_dash="dash", line_color="#999999")
-    return _base_layout(fig, title, "YoY Change (%)")
-
-
-def build_kpi_card(title: str, value: str, delta: str, delta_color: str) -> None:
-    """Streamlit metric card - placeholder for Streamlit native st.metric"""
-    pass
-
-
-def build_comparison_chart(categories: List[str], values: List[float], title: str) -> go.Figure:
-    fig = go.Figure()
-    fig.add_trace(go.Bar(
-        x=categories,
-        y=values,
-        marker_color=COLORS["secondary"],
-        text=[f"{v:.2f}%" for v in values],
+        text=[f"{v:+.2f}" if v is not None else "" for v in df["change"]],
         textposition="outside",
     ))
-    return _base_layout(fig, title, "Value (%)")
+    fig.add_hline(y=0, line_dash="dash", line_color="#999999")
+    return _base_layout(fig, title, "Perubahan (poin persentase)")
 
 
 def build_scatter_correlation(data_x: List[dict], data_y: List[dict], title: str) -> go.Figure:
@@ -109,6 +69,6 @@ def build_scatter_correlation(data_x: List[dict], data_y: List[dict], title: str
     df = pd.merge(df_x, df_y, on="year", suffixes=("_x", "_y"))
     fig = px.scatter(df, x="value_x", y="value_y",
                      title=title,
-                     labels={"value_x": "GDP Growth (%)", "value_y": "Inflation (%)"})
+                     labels={"value_x": "Pertumbuhan Ekonomi (%)", "value_y": "Inflasi (%)"})
     fig.update_traces(marker=dict(size=10, color=COLORS["primary"]))
-    return _base_layout(fig, title, "Inflation (%)")
+    return _base_layout(fig, title, "Inflasi (%)")
