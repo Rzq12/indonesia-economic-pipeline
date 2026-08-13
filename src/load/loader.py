@@ -61,7 +61,9 @@ class DatabaseLoader:
                 "source_url": r.source_url,
             })
         stmt = insert(FactEconomic).values(rows)
-        stmt = stmt.on_conflict_do_nothing()
+        stmt = stmt.on_conflict_do_nothing(
+            index_elements=["year_id", "country_id", "indicator_id"]
+        )
         self.session.execute(stmt)
         self.session.commit()
         return len(rows)

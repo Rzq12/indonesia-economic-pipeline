@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime, func
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime, UniqueConstraint, func
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
@@ -35,3 +35,6 @@ class FactEconomic(Base):
     value = Column(Float, nullable=False)
     source_url = Column(String)
     ingested_at = Column(DateTime, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("year_id", "country_id", "indicator_id"),
+    )
