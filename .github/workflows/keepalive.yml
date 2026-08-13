@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Ping Streamlit app
         run: |
-          code=$(curl -sS -L -o /dev/null -w "%{http_code}" https://indonesia-economic-pipeline.streamlit.app/)
+          code=$(curl -sS -L -c /tmp/cj -b /tmp/cj -o /dev/null -w "%{http_code}" \
+            -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36" \
+            -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" \
+            https://indonesia-economic-pipeline.streamlit.app/)
           echo "status: $code"
           if [ "$code" != "200" ]; then exit 1; fi
