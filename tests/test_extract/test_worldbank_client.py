@@ -16,7 +16,7 @@ def test_fetch_indicator_returns_records(client):
             "indicator": {"id": "NY.GDP.MKTP.KD.ZG", "value": "GDP growth (annual %)"},
             "country": {"id": "ID", "value": "Indonesia"},
             "countryiso3code": "IDN",
-            "year": "2023",
+            "date": "2023",
             "value": "5.05",
         }],
     ]
@@ -38,7 +38,7 @@ def test_fetch_indicator_skips_null_values(client):
             "indicator": {"id": "FP.CPI.TOTL.ZG", "value": "Inflation"},
             "country": {"id": "ID", "value": "Indonesia"},
             "countryiso3code": "IDN",
-            "year": "2023",
+            "date": "2023",
             "value": None,
         }],
     ]
