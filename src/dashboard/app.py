@@ -1,4 +1,11 @@
+import os
+
 import streamlit as st
+
+# Load secrets into env before any DB access (Streamlit Cloud)
+if "DATABASE_URL" in st.secrets:
+    os.environ["DATABASE_URL"] = st.secrets["DATABASE_URL"]
+
 from src.dashboard.queries import (
     get_inflation_trend, get_gdp_trend, get_unemployment_trend,
     get_population_trend, get_latest_values,
